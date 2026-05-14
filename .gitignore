@@ -1,0 +1,19 @@
+# Frontend ignores
+frontend/node_modules/
+frontend/build/
+frontend/.env*
+frontend/.next/
+frontend/out/
+
+# Backend ignores
+backend/node_modules/
+backend/.env*
+backend/logs
+backend/*.log
+
+# Shared ignores
+.git/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/   

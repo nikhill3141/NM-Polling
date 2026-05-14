@@ -1,0 +1,42 @@
+import React, { useEffect, useState } from "react";
+import DashboardPage from "./pages/DashboardPage.jsx";
+import LandingPage from "./pages/LandingPage.jsx";
+import PublicPollPage from "./pages/PublicPollPage.jsx";
+import { getPublicToken, getRoute, navigateTo } from "./utils/routing.js";
+
+// App owns tiny client-side routing so the project stays lightweight for the hackathon.
+function App() {
+  const [route, setRoute] = useState(getRoute());
+  const [theme, setTheme] = useState(localStorage.getItem("nm_theme") || "dark");
+  const publicToken = getPublicToken();
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("nm_theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    const syncRoute = () => setRoute(getRoute());
+    window.addEventListener("popstate", syncRoute);
+    return () => window.removeEventListener("popstate", syncRoute);
+  }, []);
+
+  function goTo(path) {
+    navigateTo(path);
+    setRoute(getRoute());
+  }
+
+  const toggleTheme = () => setTheme((current) => (current === "dark" ? "light" : "dark"));
+
+  if (publicToken) {
+    return <PublicPollPage token={publicToken} theme={theme} onToggleTheme={toggleTheme} onNavigate={goTo} />;
+  }
+
+  if (route === "dashboard") {
+    return <DashboardPage theme={theme} onToggleTheme={toggleTheme} onNavigate={goTo} />;
+  }
+
+  return <LandingPage theme={theme} onToggleTheme={toggleTheme} onNavigate={goTo} />;
+}
+
+export default App;
