@@ -58,7 +58,7 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
 
   useEffect(() => {
     if (isAuthed) loadPolls();
-  }, [isAuthed]);
+  }, [isAuthed, getDashboardStats, DashboardPage]);
 
   async function handleAuth(event) {
     event.preventDefault();
