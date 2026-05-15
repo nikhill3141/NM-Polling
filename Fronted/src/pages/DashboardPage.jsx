@@ -22,6 +22,7 @@ import ThemeButton from "../components/ThemeButton.jsx";
 import { demoPoll } from "../constants/demoPoll.js";
 import { apiRequest } from "../services/api.js";
 import { clearAuth, readStoredAuth, saveAuth } from "../utils/authStorage.js";
+import { toastClear, toastError, toastSuccess } from "../utils/appToast.js";
 
 const defaultQuestion = () => ({
   questionText: "",
@@ -40,7 +41,6 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
   });
   const [polls, setPolls] = useState([]);
   const [selectedPoll, setSelectedPoll] = useState(null);
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [pendingPollData, setPendingPollData] = useState(null);
@@ -63,7 +63,7 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
   async function handleAuth(event) {
     event.preventDefault();
     setLoading(true);
-    setMessage("");
+    toastClear();
     try {
       const endpoint =
         authMode === "login" ? "/api/users/login" : "/api/users/signup";
@@ -84,7 +84,7 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
       });
       saveAuth(data.data);
       setAuth(data.data);
-      setMessage("Dashboard unlocked");
+      toastSuccess("Dashboard unlocked");
 
       // If coming from poll creation modal, close modal and proceed with poll creation
       if (showAuthModal) {
@@ -102,7 +102,7 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
         }, 100);
       }
     } catch (error) {
-      setMessage(error.message);
+      toastError(error.message);
     } finally {
       setLoading(false);
     }
@@ -111,7 +111,7 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
   async function createPollWithData(pollData, event) {
     if (event) event.preventDefault();
     setLoading(true);
-    setMessage("");
+    toastClear();
     try {
       const payload = {
         ...pollData,
@@ -138,9 +138,9 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
         questions: [defaultQuestion()],
       });
       await loadPolls();
-      setMessage("Poll created and link is ready");
+      toastSuccess("Poll created and link is ready");
     } catch (error) {
-      setMessage(error.message);
+      toastError(error.message);
     } finally {
       setLoading(false);
     }
@@ -163,7 +163,7 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
       const data = await apiRequest("/api/polls");
       setPolls(data.data.polls);
     } catch (error) {
-      setMessage(error.message);
+      toastError(error.message);
     }
   }
 
@@ -173,14 +173,14 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
       const data = await apiRequest(`/api/polls/${pollId}`);
       setSelectedPoll(data.data.poll);
     } catch (error) {
-      setMessage(error.message);
+      toastError(error.message);
     }
   }
 
   async function createPoll(event) {
     event.preventDefault();
     setLoading(true);
-    setMessage("");
+    toastClear();
     try {
       const payload = {
         ...pollForm,
@@ -207,9 +207,9 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
         questions: [defaultQuestion()],
       });
       await loadPolls();
-      setMessage("Poll created and link is ready");
+      toastSuccess("Poll created and link is ready");
     } catch (error) {
-      setMessage(error.message);
+      toastError(error.message);
     } finally {
       setLoading(false);
     }
@@ -223,9 +223,9 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
       });
       setSelectedPoll(data.data.poll);
       await loadPolls();
-      setMessage("Results published");
+      toastSuccess("Results published");
     } catch (error) {
-      setMessage(error.message);
+      toastError(error.message);
     }
   }
 
@@ -237,15 +237,15 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
       });
       setSelectedPoll(data.data.poll);
       await loadPolls();
-      setMessage("Poll closed");
+      toastSuccess("Poll closed");
     } catch (error) {
-      setMessage(error.message);
+      toastError(error.message);
     }
   }
 
   async function copyLink(url) {
     await navigator.clipboard.writeText(url);
-    setMessage("Share link copied");
+    toastSuccess("Share link copied");
   }
 
   function updateQuestion(index, field, value) {
@@ -346,7 +346,6 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
             </h2>
           </div>
           <div className="topbar-actions">
-            {message && <span className="toast">{message}</span>}
             <ThemeButton theme={theme} onToggleTheme={onToggleTheme} />
           </div>
         </header>
@@ -405,7 +404,6 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
               setAuthForm={setAuthForm}
               handleAuth={handleAuth}
               loading={loading}
-              message={message}
             />
           </div>
         </div>

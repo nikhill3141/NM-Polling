@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import AppToaster from "./components/AppToaster.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import PublicPollPage from "./pages/PublicPollPage.jsx";
@@ -31,15 +32,20 @@ function App() {
 
   const toggleTheme = () => setTheme((current) => (current === "dark" ? "light" : "dark"));
 
-  if (publicToken) {
-    return <PublicPollPage token={publicToken} theme={theme} onToggleTheme={toggleTheme} onNavigate={goTo} />;
-  }
+  const pageProps = { theme, onToggleTheme: toggleTheme, onNavigate: goTo };
 
-  if (route === "dashboard") {
-    return <DashboardPage theme={theme} onToggleTheme={toggleTheme} onNavigate={goTo} />;
-  }
-
-  return <LandingPage theme={theme} onToggleTheme={toggleTheme} onNavigate={goTo} />;
+  return (
+    <>
+      <AppToaster />
+      {publicToken ? (
+        <PublicPollPage token={publicToken} {...pageProps} />
+      ) : route === "dashboard" ? (
+        <DashboardPage {...pageProps} />
+      ) : (
+        <LandingPage {...pageProps} />
+      )}
+    </>
+  );
 }
 
 export default App;

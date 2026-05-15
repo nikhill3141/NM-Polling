@@ -742,13 +742,86 @@ textarea:focus {
   font-size: 1.45rem;
 }
 
-.toast {
-  border: 1px solid color-mix(in srgb, var(--success) 34%, var(--border));
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--success) 12%, transparent);
+/* react-hot-toast */
+.nm-hot-toaster {
+  z-index: 9999;
+}
+
+.nm-hot-toast {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  max-width: min(380px, calc(100vw - 28px)) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 14px !important;
+  background: color-mix(in srgb, var(--surface) 90%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(1.2) !important;
+  box-shadow:
+    0 18px 48px rgba(15, 23, 42, 0.14),
+    0 0 0 1px color-mix(in srgb, var(--border) 55%, transparent) inset !important;
+  color: var(--text) !important;
+  padding: 14px 16px !important;
+  font-size: 0.9rem !important;
+  font-weight: 750 !important;
+  line-height: 1.45 !important;
+}
+
+.nm-hot-toast--success {
+  border-color: color-mix(in srgb, var(--success) 42%, var(--border)) !important;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--success) 14%, var(--surface)),
+    color-mix(in srgb, var(--surface) 92%, transparent)
+  ) !important;
+}
+
+.nm-hot-toast--error {
+  border-color: color-mix(in srgb, var(--danger) 42%, var(--border)) !important;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--danger) 12%, var(--surface)),
+    color-mix(in srgb, var(--surface) 92%, transparent)
+  ) !important;
+}
+
+.nm-hot-toast-icon {
+  flex-shrink: 0;
+}
+
+.nm-hot-toast-icon--success {
   color: var(--success);
-  padding: 8px 12px;
-  font-weight: 900;
+}
+
+.nm-hot-toast-icon--error {
+  color: var(--danger);
+}
+
+.nm-hot-toast-icon--info {
+  color: var(--primary);
+}
+
+.nm-hot-toast > div:last-child {
+  color: var(--text) !important;
+  font-weight: 750 !important;
+}
+
+.nm-hot-toast button[aria-label="Close"] {
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  background: var(--surface-soft) !important;
+  color: var(--muted) !important;
+  width: 28px !important;
+  height: 28px !important;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease !important;
+}
+
+.nm-hot-toast button[aria-label="Close"]:hover {
+  border-color: var(--primary) !important;
+  background: color-mix(in srgb, var(--primary) 12%, transparent) !important;
+  color: var(--text) !important;
 }
 
 .stats-grid {

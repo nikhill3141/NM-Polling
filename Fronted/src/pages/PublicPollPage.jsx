@@ -5,12 +5,12 @@ import BrandName from "../components/BrandName.jsx";
 import ResultQuestion from "../components/ResultQuestion.jsx";
 import ThemeButton from "../components/ThemeButton.jsx";
 import { API_URL, apiRequest } from "../services/api.js";
+import { toastClear, toastError, toastSuccess } from "../utils/appToast.js";
 import { getDeviceId } from "../utils/device.js";
 
 export default function PublicPollPage({ token, theme, onToggleTheme, onNavigate }) {
   const [poll, setPoll] = useState(null);
   const [answers, setAnswers] = useState({});
-  const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const socket = useMemo(
@@ -43,13 +43,13 @@ export default function PublicPollPage({ token, theme, onToggleTheme, onNavigate
       const data = await apiRequest(`/api/public/polls/${token}`);
       setPoll(data.data.poll);
     } catch (error) {
-      setMessage(error.message);
+      toastError(error.message);
     }
   }
 
   async function submit(event) {
     event.preventDefault();
-    setMessage("");
+    toastClear();
     try {
       const payload = {
         deviceId: getDeviceId(),
@@ -64,9 +64,9 @@ export default function PublicPollPage({ token, theme, onToggleTheme, onNavigate
       });
       setPoll(data.data.poll);
       setSubmitted(true);
-      setMessage("Response submitted");
+      toastSuccess("Response submitted");
     } catch (error) {
-      setMessage(error.message);
+      toastError(error.message);
     }
   }
 
@@ -76,7 +76,6 @@ export default function PublicPollPage({ token, theme, onToggleTheme, onNavigate
         <div className="empty-state">
           <BarChart3 size={42} />
           <h2>Loading poll</h2>
-          {message && <p>{message}</p>}
         </div>
       </main>
     );
@@ -146,7 +145,6 @@ export default function PublicPollPage({ token, theme, onToggleTheme, onNavigate
               Submit response
             </button>
           )}
-          {message && <p className="status-text">{message}</p>}
         </section>
 
         <section className="results-panel live">

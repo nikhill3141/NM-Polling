@@ -8,7 +8,6 @@ export default function AuthPanel({
   setAuthForm,
   handleAuth,
   loading,
-  message,
 }) {
   return (
     <section className="auth-panel">
@@ -46,7 +45,6 @@ export default function AuthPanel({
           <Send size={18} />
           {authMode === "login" ? "Unlock dashboard" : "Create account"}
         </button>
-        {message && <p className="status-text">{message}</p>}
       </form>
     </section>
   );
