@@ -857,13 +857,14 @@ textarea:focus {
 .vote-question,
 .choice-list {
   display: grid;
+  gap: 5px;
 }
 
 .stack,
 .builder-panel,
 .poll-results {
   gap: 16px;
-  /* height: 20rem; */
+  height: 20rem;
 }
 
 .question-editor {
