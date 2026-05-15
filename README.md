@@ -243,7 +243,7 @@ If MongoDB Atlas rejects the connection, add your current IP address in Atlas Ne
 7. Watch the creator dashboard update.
 8. Publish results to show the public live result board.
 
-## Why This Is Hackathon Ready
+## key points
 
 - It solves a clear real-time audience feedback problem.
 - It includes authentication, poll creation, public sharing, and result visualization.
