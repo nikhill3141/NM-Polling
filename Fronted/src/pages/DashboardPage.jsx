@@ -308,7 +308,6 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
         <a href="/">
           <BrandName compact />
         </a>
-        {/* <button className="ghost-btn" onClick={() => onNavigate("/")}>Landing</button> */}
         {isAuthed && (
           <button className="ghost-btn" onClick={logout}>
             <LogOut size={18} />

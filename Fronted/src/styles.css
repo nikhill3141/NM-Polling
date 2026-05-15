@@ -857,7 +857,7 @@ textarea:focus {
 .vote-question,
 .choice-list {
   display: grid;
-  gap: 5px;
+  gap: 20px;
 }
 
 .stack,
