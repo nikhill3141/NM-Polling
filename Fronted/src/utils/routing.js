@@ -11,3 +11,4 @@ export function getRoute() {
 export function navigateTo(path) {
   window.history.pushState({}, "", path);
 }
+

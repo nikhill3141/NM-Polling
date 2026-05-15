@@ -305,7 +305,9 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
   return (
     <main className="app-shell">
       <aside className="sidebar">
-        <BrandName compact />
+        <a href="/">
+          <BrandName compact />
+        </a>
         {/* <button className="ghost-btn" onClick={() => onNavigate("/")}>Landing</button> */}
         {isAuthed && (
           <button className="ghost-btn" onClick={logout}>

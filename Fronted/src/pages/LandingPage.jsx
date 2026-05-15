@@ -45,15 +45,18 @@ export default function LandingPage({ theme, onToggleTheme, onNavigate }) {
 
   return (
     <main className="landing-shell">
+      {/* navbar */}
       <nav className="landing-nav">
-        <BrandName />
+        <a href="#">
+          <BrandName />
+        </a>
         <div className="nav-actions">
           <a href="#flow">Flow</a>
           <a href="#features">Features</a>
           <ThemeButton theme={theme} onToggleTheme={onToggleTheme} />
         </div>
       </nav>
-
+      {/* hero section */}
       <section className="hero-section">
         <div className="hero-copy">
           <span className="hero-kicker">
@@ -113,6 +116,7 @@ export default function LandingPage({ theme, onToggleTheme, onNavigate }) {
         </div>
       </section>
 
+      {/* flow section   */}
       <section className="flow-section" id="flow">
         <div className="section-heading">
           <p className="eyebrow">Product flow</p>
@@ -144,17 +148,17 @@ export default function LandingPage({ theme, onToggleTheme, onNavigate }) {
           </div>
         </div>
       </section>
-
+      {/* Features section */}
       <section className="feature-strip" id="features">
         {features.map((feature) => (
           <FeatureCard key={feature.title} {...feature} />
         ))}
       </section>
-
+      {/* cta and auth section */}
       <section className="cta-band">
         <div>
           <p className="eyebrow">Ready for demo day</p>
-          <h2>Open the dashboard first. Sign in only when you create.</h2>
+          <h2>Open the dashboard And start creating the polls.</h2>
         </div>
         <button
           className="primary-btn"
@@ -165,6 +169,7 @@ export default function LandingPage({ theme, onToggleTheme, onNavigate }) {
         </button>
       </section>
 
+      {/* footer */}
       <footer className="site-footer" id="footer">
         <div>
           <BrandName compact />
