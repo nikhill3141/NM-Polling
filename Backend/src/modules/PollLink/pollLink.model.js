@@ -108,7 +108,7 @@ pollLinkSchema.methods.getPublicUrl = function (
   return this.save();
 };
 
-// ==================== STATIC METHODS ====================
+// STATIC METHODS 
 
 /**
  * Generate a new unique token

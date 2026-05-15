@@ -366,15 +366,6 @@ export default function DashboardPage({ theme, onToggleTheme, onNavigate }) {
             onAuthRequired={() => setShowAuthModal(true)}
             onPendingPoll={setPendingPollData}
           />
-          {/* <AuthGate
-            authMode={authMode}
-            setAuthMode={setAuthMode}
-            authForm={authForm}
-            setAuthForm={setAuthForm}
-            handleAuth={handleAuth}
-            loading={loading}
-            message={message}
-          /> */}
 
           <section className="results-panel dashboard-results">
             {selectedPoll ? (
