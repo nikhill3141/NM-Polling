@@ -19,6 +19,7 @@ const app = express();
 const httpServer = createServer(app);
 const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
 
+//socket.io server setup
 const io = new SocketServer(httpServer, {
   cors: {
     origin: clientUrl,
@@ -26,9 +27,13 @@ const io = new SocketServer(httpServer, {
     credentials: true,
   },
 });
-
+//cookie parser
 app.use(cookieParser());
+
+//security
 app.use(helmet());
+
+//cross platform verification
 app.use(
   cors({
     origin: clientUrl,
@@ -38,16 +43,18 @@ app.use(
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ limit: "100kb", extended: true }));
 
-app.use((req, res, next) => {
-  console.log(`${req.method} - ${req.path}`);
-  next();
-});
+//for understanding the req = method and path (for the understanding not for production) dev use
+// app.use((req, res, next) => {
+//   console.log(`${req.method} - ${req.path}`);
+//   next();
+// });
 
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
 
+//server health route
 app.get("/health", (req, res) => {
   res.json({
     status: "ok",
@@ -56,6 +63,7 @@ app.get("/health", (req, res) => {
   });
 });
 
+//api routes
 app.use("/api/users", userRoutes);
 app.use("/api/polls", pollRoutes);
 app.use("/api/public/polls", publicPollRoutes);

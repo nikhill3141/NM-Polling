@@ -5,8 +5,12 @@ import PollLink from "../PollLink/pollLink.model.js";
 import Question from "../Question/question.model.js";
 import Response from "../Response/response.model.js";
 
+//All the poll logic at one place there schemas are devided in diffrent folder for understanding Architecture
+
+
 const toObjectId = (id) => new mongoose.Types.ObjectId(id);
 
+//Get ip address for avoiding the multipal responces from same device 
 function getIpAddress(req) {
   const forwardedFor = req.headers["x-forwarded-for"];
   if (forwardedFor) {
@@ -15,6 +19,7 @@ function getIpAddress(req) {
   return req.ip;
 }
 
+//Validation of poll question
 function validatePollQuestions(questions = []) {
   if (!Array.isArray(questions) || questions.length === 0) {
     const error = new Error("Add at least one question");
@@ -46,6 +51,7 @@ function validatePollQuestions(questions = []) {
   });
 }
 
+//Poll view
 async function buildPollView(poll, link) {
   const questions = await Question.find({ pollId: poll._id }).sort({ order: 1 });
   const questionIds = questions.map((question) => question._id);
@@ -96,6 +102,7 @@ async function buildPollView(poll, link) {
   };
 }
 
+//Poll Creation
 async function createPoll(req, res) {
   try {
     const {
@@ -150,6 +157,7 @@ async function createPoll(req, res) {
   }
 }
 
+//get polls
 async function getMyPolls(req, res) {
   try {
     await Poll.findAndUpdateExpiredPolls();
@@ -187,6 +195,7 @@ async function getMyPolls(req, res) {
   }
 }
 
+//get one poll by id
 async function getPollById(req, res) {
   try {
     if (!mongoose.isValidObjectId(req.params.pollId)) {
@@ -207,6 +216,7 @@ async function getPollById(req, res) {
   }
 }
 
+//declare the poll result
 async function publishPollResults(req, res) {
   try {
     const poll = await Poll.findById(req.params.pollId);
@@ -234,6 +244,7 @@ async function publishPollResults(req, res) {
   }
 }
 
+//close poll so no one can addd responce after that
 async function closePoll(req, res) {
   try {
     const poll = await Poll.findById(req.params.pollId);
@@ -261,6 +272,7 @@ async function closePoll(req, res) {
   }
 }
 
+//public poll
 async function getPublicPoll(req, res) {
   try {
     const link = await PollLink.findByToken(req.params.token);
@@ -289,6 +301,7 @@ async function getPublicPoll(req, res) {
   }
 }
 
+//poll responce
 async function submitPollResponse(req, res) {
   try {
     const link = await PollLink.findByToken(req.params.token);
@@ -406,6 +419,8 @@ async function submitPollResponse(req, res) {
   }
 }
 
+
+//export all controllers
 export {
   closePoll,
   createPoll,
