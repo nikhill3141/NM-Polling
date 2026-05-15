@@ -43,7 +43,7 @@ app.use(
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ limit: "100kb", extended: true }));
 
-//for understanding the req = method and path (for the understanding not for production) dev use
+// for understanding the req = method and path (for the understanding not for production) dev use
 // app.use((req, res, next) => {
 //   console.log(`${req.method} - ${req.path}`);
 //   next();
