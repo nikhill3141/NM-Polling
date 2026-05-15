@@ -68,6 +68,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/polls", pollRoutes);
 app.use("/api/public/polls", publicPollRoutes);
 
+//socket connection
 io.on("connection", (socket) => {
   console.log(`New WebSocket connection: ${socket.id}`);
 
@@ -90,6 +91,7 @@ io.on("connection", (socket) => {
   });
 });
 
+//error handlers
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -97,7 +99,6 @@ app.use((req, res) => {
     path: req.path,
   });
 });
-
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 8000;
