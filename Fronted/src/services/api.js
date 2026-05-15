@@ -1,7 +1,6 @@
 import { readStoredAuth, saveAuth } from "../utils/authStorage.js";
 
-export const API_URL =
-  import.meta.env.VITE_API_URL || "https://nm-polling-zumy.vercel.app/";
+export const API_URL = "https://nm-polling-zumy.vercel.app/";
 
 // Fetch wrapper adds tokens and performs refresh-token rotation on expired access tokens.
 export async function apiRequest(path, options = {}, retry = true) {
